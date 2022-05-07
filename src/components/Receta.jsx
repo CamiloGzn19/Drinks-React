@@ -3,7 +3,7 @@ import { ModalContext } from "../context/ModalContext";
 
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 
 const style = {
   position: "absolute",
@@ -20,8 +20,6 @@ const Receta = ({ receta }) => {
   // Configuración del modal De MUI
   const [open, setOpen] = useState(false);
 
-  console.log(style);
-
   const handleOpen = () => {
     setOpen(true);
   };
@@ -31,7 +29,24 @@ const Receta = ({ receta }) => {
   };
 
   // Extraer los valores del context
-  const { guardarIdReceta } = useContext(ModalContext);
+  const { informacion, guardarIdReceta, guardarReceta } =
+    useContext(ModalContext);
+
+  // Muestra y formatea los ingredientes
+  const mostrarIngredientes = (informacion) => {
+    let ingredientes = [];
+    for (let i = 1; i < 16; i++) {
+      if (informacion[`strIngredient${i}`]) {
+        ingredientes.push(
+          <li>
+            {informacion[`strIngredient${i}`]} {informacion[`strMeasure${i}`]}
+          </li>
+        );
+      }
+    }
+
+    return ingredientes;
+  };
 
   return (
     <div className="col-md-4 mb-3">
@@ -54,14 +69,26 @@ const Receta = ({ receta }) => {
             Ver Receta
           </button>
 
-          <Modal open={open}>
+          <Modal
+            open={open}
+            onClose={() => {
+              guardarReceta({});
+              guardarIdReceta(null);
+              handleClose();
+            }}
+          >
             <Box sx={style}>
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Desde modal
+                {informacion.strDrink}
               </Typography>
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                {informacion.strInstructions}
               </Typography>
+              <img className="img-fluid my-4" src={informacion.strDrinkThumb} />
+              <h4>Ingredientes y cantidades</h4>
+              <ul>
+                <li>{mostrarIngredientes(informacion)}</li>
+              </ul>
             </Box>
           </Modal>
         </div>
