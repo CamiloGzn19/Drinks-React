@@ -19,3 +19,10 @@ h1 {
   text-align: center;
   font-size: 3rem;
 }
+
+.img-prin {
+  display: flex;
+  justify-content: center;
+  width: 250px;
+  margin: 0 auto;
+}

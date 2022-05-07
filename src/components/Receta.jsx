@@ -84,8 +84,12 @@ const Receta = ({ receta }) => {
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {informacion.strInstructions}
               </Typography>
-              <img className="img-fluid my-4" src={informacion.strDrinkThumb} />
-              <h4>Ingredientes y cantidades</h4>
+              <img
+                className="img-prin"
+                src={informacion.strDrinkThumb}
+                alt={informacion.strDrinkThumb}
+              />
+              <h5>Ingredientes y cantidades</h5>
               <ul>
                 <li>{mostrarIngredientes(informacion)}</li>
               </ul>
